@@ -7,6 +7,7 @@ import codecs
 
 class App:
     def __init__(self, window):
+        self.window = window
         self.data = json.load(codecs.open('data.json', 'r', 'utf-8'))
         self.cur = {}
 
@@ -31,6 +32,11 @@ class App:
         window.bind("3", self.chooseC)
         window.bind("4", self.chooseD)
         window.bind("5", self.chooseE)
+
+        window.title("({}/{})".format(
+            len([i for i in self.data if i.get('count') == 3]),
+            len(self.data)
+        ))
 
         self.nextProblem()
 
@@ -76,7 +82,13 @@ class App:
             if self.isDone:
                 if not self.haveWrong:
                     self.cur["count"] = self.cur.get("count", 0) + 1
-                    self.save()
+                    self.window.title("({}/{})".format(
+                        len([i for i in self.data if i.get('count') == 3]),
+                        len(self.data)
+                    ))
+                else:
+                    self.cur["count"] = self.cur.get("count", 0) - 1
+                self.save()
                 self.nextProblem()
             else:
                 self.setColor(widget, 'green')
