@@ -8,6 +8,7 @@ import codecs
 class App:
     def __init__(self, window):
         self.data = json.load(codecs.open('data.json', 'r', 'utf-8'))
+        self.cur = {}
 
         ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
 
@@ -39,6 +40,12 @@ class App:
         done = [widget for widget in widgets if widget["background"] == "green"]
         return len(done) == len(self.cur['correct'])
 
+    @property
+    def haveWrong(self):
+        widgets = [self.A, self.B, self.C, self.D, self.E]
+        wrong = [widget for widget in widgets if widget["background"] == "red"]
+        return len(wrong)
+
     def setColor(self, widget, color="red"):
         widget["background"] = color
 
@@ -60,10 +67,16 @@ class App:
     def chooseE(self, event=None):
         self.judge(self.E)
 
+    def save(self):
+        json.dump(self.data, codecs.open('data.json', 'w', 'utf-8'), ensure_ascii=False, indent=4)
+
     def judge(self, widget):
         text = widget["text"]
         if text in self.cur['correct']:
             if self.isDone:
+                if not self.haveWrong:
+                    self.cur["count"] = self.cur.get("count", 0) + 1
+                    self.save()
                 self.nextProblem()
             else:
                 self.setColor(widget, 'green')
@@ -72,6 +85,10 @@ class App:
 
     def nextProblem(self):
         self.cur = random.choice(self.data)
+        curcount = self.cur.get('count', 0)
+        while curcount >= 3:
+            self.cur = random.choice(self.data)
+            curcount = self.cur.get('count', 0)
 
         options = self.cur['options'].copy()
         if options:
@@ -83,7 +100,7 @@ class App:
         widgets = [self.A, self.B, self.C, self.D, self.E]
         for widget, option in zip(widgets, options):
             self.setText(widget, option)
-        self.setText(self.problem, self.cur['problem'])
+        self.setText(self.problem, self.cur['problem'] + '(已完成{}次)'.format(curcount))
 
         for widget in widgets:
             widget["background"] = "SystemButtonFace"
