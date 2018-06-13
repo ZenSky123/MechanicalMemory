@@ -73,16 +73,14 @@
         ]
     },
     {
-        "problem": "",
+        "problem": "ETL系统的主要作用包括：",
         "options": [
-            "ETL系统的主要作用包括：",
             "数据提取",
             "数据转换",
             "数据分析",
             "数据装载"
         ],
         "correct": [
-            "ETL系统的主要作用包括：",
             "数据提取",
             "数据分析"
         ]
@@ -881,15 +879,15 @@
     {
         "problem": "奥卡姆的剃刀指的是：\r",
         "options": [
-            "",
-            "",
-            "",
+            "Entities are not to be multiplied beyond necessity.",
+            "Among competing hypotheses, the one with the fewest assumptions should be selected.",
+            "The simplest explanation is usually the correct one.",
             "中世纪英国上流社会的一种生活用品。"
         ],
         "correct": [
-            "",
-            "",
-            ""
+            "Entities are not to be multiplied beyond necessity.",
+            "Among competing hypotheses, the one with the fewest assumptions should be selected.",
+            "The simplest explanation is usually the correct one."
         ]
     },
     {
