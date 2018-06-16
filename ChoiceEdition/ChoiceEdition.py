@@ -3,12 +3,19 @@ import random
 import tkinter.font as tkFont
 import json
 import codecs
+import configparser
 
 
 class App:
     def __init__(self, window):
+        cfg = configparser.ConfigParser()
+        cfg.read('config.ini')
+
+        self.filename = cfg.get('path', 'filename')
+
+        self.data = json.load(codecs.open(self.filename, 'r', 'utf-8'))
+
         self.window = window
-        self.data = json.load(codecs.open('data.json', 'r', 'utf-8'))
         self.cur = {}
 
         ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
@@ -74,7 +81,7 @@ class App:
         self.judge(self.E)
 
     def save(self):
-        json.dump(self.data, codecs.open('data.json', 'w', 'utf-8'), ensure_ascii=False, indent=4)
+        json.dump(self.data, codecs.open(self.filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
 
     def judge(self, widget):
         text = widget["text"]
