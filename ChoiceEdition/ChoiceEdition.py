@@ -63,7 +63,11 @@ class App:
         widget["background"] = color
 
     def setText(self, widget, text):
-        widget["text"] = text
+        res = []
+        step = 50
+        for i in range(0, len(text), step):
+            res.append(text[i:i + step])
+        widget["text"] = '\n'.join(res)
 
     def chooseA(self, event=None):
         self.judge(self.A)
@@ -84,7 +88,8 @@ class App:
         json.dump(self.data, codecs.open(self.filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
 
     def judge(self, widget):
-        text = widget["text"]
+        text = widget["text"].replace('\n','')
+
         if text in self.cur['correct']:
             if self.isDone:
                 if not self.haveWrong:

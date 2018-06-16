@@ -19,7 +19,8 @@
         ],
         "correct": [
             "Endangered animals and their habitats."
-        ]
+        ],
+        "count": -1
     },
     {
         "problem": "What has happended since the passage of the Endangered Species Act?",
@@ -50,7 +51,8 @@
         ],
         "correct": [
             "t"
-        ]
+        ],
+        "count": -3
     },
     {
         "problem": "California gray whales are now extinct.",
@@ -70,7 +72,8 @@
         ],
         "correct": [
             "f"
-        ]
+        ],
+        "count": -3
     },
     {
         "problem": "All the endangered species of freshwater fish are in North America.",
@@ -80,7 +83,8 @@
         ],
         "correct": [
             "f"
-        ]
+        ],
+        "count": -1
     },
     {
         "problem": "The fish biologist feels discouraged sometimes by the bad situation for freshwater fish.",
@@ -100,7 +104,8 @@
         ],
         "correct": [
             "t"
-        ]
+        ],
+        "count": -1
     },
     {
         "problem": "According to the research, most people think that a beautiful face is ___.",
@@ -122,7 +127,8 @@
         ],
         "correct": [
             "36 percent"
-        ]
+        ],
+        "count": -2
     },
     {
         "problem": "Anthropologist Don Symons believed that men prefer full lips and big eyes because they think these features equal ___.",
@@ -133,7 +139,8 @@
         ],
         "correct": [
             "health and ability to have babies"
-        ]
+        ],
+        "count": -1
     },
     {
         "problem": "The reporter Gwen Silva would probably agree with the conclusion that ___.",
@@ -155,7 +162,8 @@
         ],
         "correct": [
             "Their shoulders are lowered."
-        ]
+        ],
+        "count": 0
     },
     {
         "problem": "How do some of the Padaung people make a living in Thailand?",
@@ -188,7 +196,8 @@
         ],
         "correct": [
             "People's attitude has changed over time."
-        ]
+        ],
+        "count": -2
     },
     {
         "problem": "What is the most popular type of cosmetic surgery?",
@@ -210,6 +219,7 @@
         ],
         "correct": [
             "It can make people look the way they want to look like."
-        ]
+        ],
+        "count": -1
     }
 ]
