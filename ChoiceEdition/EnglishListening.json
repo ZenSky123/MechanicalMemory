@@ -21,7 +21,7 @@
         "correct": [
             "Endangered animals and their habitats."
         ],
-        "count": -3
+        "count": -4
     },
     {
         "question": "What has happended since the passage of the Endangered Species Act?",
@@ -33,7 +33,7 @@
         "correct": [
             "The number of species that are endangered has not changed much."
         ],
-        "count": -1
+        "count": 0
     },
     {
         "question": "Most species of the baleen whales are now endangered.",
@@ -55,7 +55,7 @@
         "correct": [
             "t"
         ],
-        "count": -3
+        "count": -2
     },
     {
         "question": "California gray whales are now extinct.",
@@ -88,7 +88,7 @@
         "correct": [
             "f"
         ],
-        "count": -3
+        "count": -2
     },
     {
         "question": "The fish biologist feels discouraged sometimes by the bad situation for freshwater fish.",
@@ -194,7 +194,7 @@
         "correct": [
             "Because the coils show that the women belong to the Padaung tribe."
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "What is people's attitude toward cosmetic surgery?",
@@ -206,7 +206,7 @@
         "correct": [
             "People's attitude has changed over time."
         ],
-        "count": -7
+        "count": -8
     },
     {
         "question": "What is the most popular type of cosmetic surgery?",
@@ -230,6 +230,6 @@
         "correct": [
             "It can make people look the way they want to look like."
         ],
-        "count": -3
+        "count": -1
     }
 ]
