@@ -4,6 +4,9 @@ import tkinter.font as tkFont
 import json
 import codecs
 import configparser
+from functools import partial
+
+LIMIT = 3
 
 
 class App:
@@ -11,123 +14,125 @@ class App:
         cfg = configparser.ConfigParser()
         cfg.read('config.ini')
 
-        self.filename = cfg.get('path', 'filename')
+        self.data_filename = cfg.get('path', 'filename')
 
-        self.data = json.load(codecs.open(self.filename, 'r', 'utf-8'))
+        self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
 
         self.window = window
         self.cur = {}
 
         ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
 
-        self.problem = Label(window, text="problem..", font=ft)
-        self.A = Button(window, text='A..', command=self.chooseA, font=ft)
-        self.B = Button(window, text='B..', command=self.chooseB, font=ft)
-        self.C = Button(window, text='C..', command=self.chooseC, font=ft)
-        self.D = Button(window, text="D..", command=self.chooseD, font=ft)
-        self.E = Button(window, text="E..", command=self.chooseE, font=ft)
+        question = Label(window, text="question..", font=ft)
+        self.A = Button(window, text='A..', font=ft)
+        self.B = Button(window, text='B..', font=ft)
+        self.C = Button(window, text='C..', font=ft)
+        self.D = Button(window, text="D..", font=ft)
+        self.E = Button(window, text="E..", font=ft)
 
-        self.problem.pack(fill=BOTH, expand=YES)
-        self.A.pack(fill=BOTH, expand=YES)
-        self.B.pack(fill=BOTH, expand=YES)
-        self.C.pack(fill=BOTH, expand=YES)
-        self.D.pack(fill=BOTH, expand=YES)
-        self.E.pack(fill=BOTH, expand=YES)
+        buttons = [self.A, self.B, self.C, self.D, self.E]
+        events = [partial(self.judge, button) for button in buttons]
 
-        window.bind("1", self.chooseA)
-        window.bind("2", self.chooseB)
-        window.bind("3", self.chooseC)
-        window.bind("4", self.chooseD)
-        window.bind("5", self.chooseE)
+        for button, event in zip(buttons, events):
+            button['command'] = events
+
+        question.pack(fill=BOTH, expand=YES)
+        [button.pack(fill=BOTH, expand=YES) for button in buttons]
+
+        [window.bind(char, event) for char, event in zip('12345', events)]
 
         window.title("({}/{})".format(
-            len([i for i in self.data if i.get('count') == 3]),
-            len(self.data)
+            len([i for i in self.questions if i.get('count') == 3]),
+            len(self.questions)
         ))
 
-        self.nextProblem()
+        self.question = question
+        self.buttons = buttons
 
-    @property
-    def isDone(self):
-        widgets = [self.A, self.B, self.C, self.D, self.E]
-        done = [widget for widget in widgets if widget["background"] == "green"]
+        self.next_question()
+
+    def complete_question(self):
+        done = [button for button in self.buttons if button["background"] == "green"]
         return len(done) == len(self.cur['correct'])
 
-    @property
-    def haveWrong(self):
-        widgets = [self.A, self.B, self.C, self.D, self.E]
-        wrong = [widget for widget in widgets if widget["background"] == "red"]
+    def miss(self):
+        wrong = [button for button in self.buttons if button["background"] == "red"]
         return len(wrong)
 
-    def setColor(self, widget, color="red"):
+    def set_color(self, widget, color="SystemButtonFace"):
         widget["background"] = color
 
-    def setText(self, widget, text):
+    def set_text(self, widget, text):
         res = []
         step = 50
         for i in range(0, len(text), step):
             res.append(text[i:i + step])
         widget["text"] = '\n'.join(res)
 
-    def chooseA(self, event=None):
-        self.judge(self.A)
-
-    def chooseB(self, event=None):
-        self.judge(self.B)
-
-    def chooseC(self, event=None):
-        self.judge(self.C)
-
-    def chooseD(self, event=None):
-        self.judge(self.D)
-
-    def chooseE(self, event=None):
-        self.judge(self.E)
-
     def save(self):
-        json.dump(self.data, codecs.open(self.filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
+        json.dump(self.questions, codecs.open(self.questions_filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
 
-    def judge(self, widget):
-        text = widget["text"].replace('\n','')
+    def set_title(self, done):
+        title_string = "({done}/{total})".format(done=done, total=len(self.questions))
+        self.window.title(title_string)
 
-        if text in self.cur['correct']:
-            if self.isDone:
-                if not self.haveWrong:
-                    self.cur["count"] = self.cur.get("count", 0) + 1
-                    self.window.title("({}/{})".format(
-                        len([i for i in self.data if i.get('count') == 3]),
-                        len(self.data)
-                    ))
-                else:
-                    self.cur["count"] = self.cur.get("count", 0) - 1
-                self.save()
-                self.nextProblem()
+    def update_title(self):
+        done = len([question for question in self.questions if question.get('count', 0) >= LIMIT])
+        self.set_title(done)
+
+    def mark_correct(self):
+        self.cur['count'] = self.cur.get('count', 0) + 1
+
+    def mark_wrong(self):
+        self.cur['count'] = self.cur.get('count', 0) - 1
+
+    def judge(self, button, e=None):
+        text = button["text"].replace('\n', '')
+        result_color = 'red'
+
+        choose_correct = text in self.cur['correct']
+        next_question_condition = choose_correct and self.complete_question()
+
+        if next_question_condition:
+            if self.miss():
+                self.mark_wrong()
+                self.update_title()
             else:
-                self.setColor(widget, 'green')
+                self.mark_correct()
+            self.save()
+            self.next_question()
         else:
-            self.setColor(widget)
+            if choose_correct:
+                result_color = 'green'
+            self.set_color(button, result_color)
 
-    def nextProblem(self):
-        self.cur = random.choice(self.data)
-        curcount = self.cur.get('count', 0)
-        while curcount >= 3:
-            self.cur = random.choice(self.data)
+    def empty_button(self):
+        [self.set_text(button, '') for button in self.buttons]
+
+    def restore_color(self):
+        [self.set_color(button) for button in self.buttons]
+
+    def next_question(self):
+        optional_questions = [question for question in self.questions if question['count'] < LIMIT]
+
+        if optional_questions:
+            self.cur = random.choice(optional_questions)
             curcount = self.cur.get('count', 0)
+        else:
+            self.set_text(self.question, '全部题目已复习完成！')
+            [self.set_text(button, '') for button in self.buttons]
+            return
 
         options = self.cur['options'].copy()
-        if options:
-            random.shuffle(options)
-            options.extend(['', '', '', '', ''])
-        else:
-            options = ['√', '×', '', '', '']
+        random.shuffle(options)
 
-        widgets = [self.A, self.B, self.C, self.D, self.E]
-        for widget, option in zip(widgets, options):
-            self.setText(widget, option)
-        self.setText(self.problem, self.cur['problem'] + '(已完成{}次)'.format(curcount))
+        self.empty_button()
 
-        for widget in widgets:
-            widget["background"] = "SystemButtonFace"
+        self.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(curcount))
+        [self.set_text(button, option)
+         for button, option in zip(self.buttons, options)]
+
+        self.restore_color()
 
 
 root = Tk()
