@@ -9,7 +9,7 @@
         "correct": [
             "The difficulties of protecting both animals and their habitats."
         ],
-        "count": -1
+        "count": 0
     },
     {
         "question": "What does the Endagered Species Act protect?",
@@ -33,7 +33,7 @@
         "correct": [
             "The number of species that are endangered has not changed much."
         ],
-        "count": -2
+        "count": -1
     },
     {
         "question": "Most species of the baleen whales are now endangered.",
@@ -44,7 +44,7 @@
         "correct": [
             "t"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "A number of countries continue with commercial whaling simply because there is no policy against it.",
@@ -55,7 +55,7 @@
         "correct": [
             "t"
         ],
-        "count": -4
+        "count": -3
     },
     {
         "question": "California gray whales are now extinct.",
@@ -66,7 +66,7 @@
         "correct": [
             "f"
         ],
-        "count": -3
+        "count": -5
     },
     {
         "question": "According to the conversation, we can help by donating money to the conservation organizations.",
@@ -77,7 +77,7 @@
         "correct": [
             "f"
         ],
-        "count": -4
+        "count": -5
     },
     {
         "question": "All the endangered species of freshwater fish are in North America.",
@@ -88,7 +88,7 @@
         "correct": [
             "f"
         ],
-        "count": -2
+        "count": -3
     },
     {
         "question": "The fish biologist feels discouraged sometimes by the bad situation for freshwater fish.",
@@ -98,7 +98,8 @@
         ],
         "correct": [
             "f"
-        ]
+        ],
+        "count": 0
     },
     {
         "question": "The fish bioloist suggests that people should volunteer to help clean up the rivers.",
@@ -109,7 +110,7 @@
         "correct": [
             "t"
         ],
-        "count": -2
+        "count": -3
     },
     {
         "question": "According to the research, most people think that a beautiful face is ___.",
@@ -121,7 +122,7 @@
         "correct": [
             "average and almost symmetrical"
         ],
-        "count": -1
+        "count": 1
     },
     {
         "question": "The \"golden ratio\" for the length of a face states that the distance between the eyes and the mouth is ___ of the length of the whold face.",
@@ -133,7 +134,7 @@
         "correct": [
             "36 percent"
         ],
-        "count": -4
+        "count": -5
     },
     {
         "question": "Anthropologist Don Symons believed that men prefer full lips and big eyes because they think these features equal ___.",
@@ -145,7 +146,7 @@
         "correct": [
             "health and ability to have babies"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "The reporter Gwen Silva would probably agree with the conclusion that ___.",
@@ -169,7 +170,7 @@
         "correct": [
             "Their shoulders are lowered."
         ],
-        "count": -4
+        "count": -3
     },
     {
         "question": "How do some of the Padaung people make a living in Thailand?",
@@ -205,7 +206,7 @@
         "correct": [
             "People's attitude has changed over time."
         ],
-        "count": -5
+        "count": -7
     },
     {
         "question": "What is the most popular type of cosmetic surgery?",

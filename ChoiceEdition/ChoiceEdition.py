@@ -79,9 +79,9 @@ class App:
         if next_question_condition:
             if self.miss():
                 self.mark_wrong()
-                self.update_title()
             else:
                 self.mark_correct()
+                self.update_title()
             self.save()
             self.next_question()
         else:
@@ -100,7 +100,7 @@ class App:
 
         if optional_questions:
             self.cur = random.choice(optional_questions)
-            curcount = self.cur.get('count', 0)
+            count = self.cur.get('count', 0)
         else:
             self.set_text(self.question, '全部题目已复习完成！')
             [self.set_text(button, '') for button in self.buttons]
@@ -112,7 +112,7 @@ class App:
         self.empty_button()
         self.restore_color()
 
-        self.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(curcount))
+        self.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(count))
         [self.set_text(button, option)
          for button, option in zip(self.buttons, options)]
 
