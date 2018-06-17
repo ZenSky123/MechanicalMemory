@@ -11,44 +11,30 @@ LIMIT = 3
 
 class App:
     def __init__(self, window):
+        self.window = window
+
+        ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
+
         cfg = configparser.ConfigParser()
         cfg.read('config.ini')
-
         self.data_filename = cfg.get('path', 'filename')
 
         self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
 
-        self.window = window
-        self.cur = {}
+        self.question = Label(window, text="question..", font=ft)
+        self.buttons = [Button(window, font=ft) for _ in range(5)]
 
-        ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
+        events = [partial(self.judge, button) for button in self.buttons]
 
-        question = Label(window, text="question..", font=ft)
-        self.A = Button(window, text='A..', font=ft)
-        self.B = Button(window, text='B..', font=ft)
-        self.C = Button(window, text='C..', font=ft)
-        self.D = Button(window, text="D..", font=ft)
-        self.E = Button(window, text="E..", font=ft)
-
-        buttons = [self.A, self.B, self.C, self.D, self.E]
-        events = [partial(self.judge, button) for button in buttons]
-
-        for button, event in zip(buttons, events):
+        for button, event in zip(self.buttons, events):
             button['command'] = events
 
-        question.pack(fill=BOTH, expand=YES)
-        [button.pack(fill=BOTH, expand=YES) for button in buttons]
+        self.question.pack(fill=BOTH, expand=YES)
+        [button.pack(fill=BOTH, expand=YES) for button in self.buttons]
 
         [window.bind(char, event) for char, event in zip('12345', events)]
 
-        window.title("({}/{})".format(
-            len([i for i in self.questions if i.get('count') == 3]),
-            len(self.questions)
-        ))
-
-        self.question = question
-        self.buttons = buttons
-
+        self.update_title()
         self.next_question()
 
     def complete_question(self):
@@ -70,7 +56,7 @@ class App:
         widget["text"] = '\n'.join(res)
 
     def save(self):
-        json.dump(self.questions, codecs.open(self.questions_filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
+        json.dump(self.questions, codecs.open(self.data_filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
 
     def set_title(self, done):
         title_string = "({done}/{total})".format(done=done, total=len(self.questions))
@@ -113,7 +99,7 @@ class App:
         [self.set_color(button) for button in self.buttons]
 
     def next_question(self):
-        optional_questions = [question for question in self.questions if question['count'] < LIMIT]
+        optional_questions = [question for question in self.questions if question.get('count', 0) < LIMIT]
 
         if optional_questions:
             self.cur = random.choice(optional_questions)

@@ -43,7 +43,7 @@
         "correct": [
             "t"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "A number of countries continue with commercial whaling simply because there is no policy against it.",
@@ -65,7 +65,7 @@
         "correct": [
             "f"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "According to the conversation, we can help by donating money to the conservation organizations.",
@@ -87,7 +87,7 @@
         "correct": [
             "f"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "The fish biologist feels discouraged sometimes by the bad situation for freshwater fish.",
@@ -155,7 +155,8 @@
         ],
         "correct": [
             "people from the same culture mosyly agree on what makes someone beautiful."
-        ]
+        ],
+        "count": 0
     },
     {
         "question": "What happens when Padaung women wear brass coils?",
@@ -203,7 +204,7 @@
         "correct": [
             "People's attitude has changed over time."
         ],
-        "count": -3
+        "count": -4
     },
     {
         "question": "What is the most popular type of cosmetic surgery?",
@@ -214,7 +215,8 @@
         ],
         "correct": [
             "Breast augmentation."
-        ]
+        ],
+        "count": -1
     },
     {
         "question": "What can modern cosmetic surgery do?",
