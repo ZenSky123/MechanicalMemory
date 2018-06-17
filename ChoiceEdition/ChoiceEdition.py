@@ -11,9 +11,11 @@ LIMIT = 3
 
 class App:
     def __init__(self, window):
-        self.window = window
-
         ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
+
+        self.window = window
+        self.question = Label(window, text="question..", font=ft)
+        self.buttons = [Button(window, font=ft) for _ in range(5)]
 
         cfg = configparser.ConfigParser()
         cfg.read('config.ini')
@@ -21,29 +23,16 @@ class App:
 
         self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
 
-        self.question = Label(window, text="question..", font=ft)
-        self.buttons = [Button(window, font=ft) for _ in range(5)]
-
         events = [partial(self.judge, button) for button in self.buttons]
-
-        for button, event in zip(self.buttons, events):
-            button['command'] = events
 
         self.question.pack(fill=BOTH, expand=YES)
         [button.pack(fill=BOTH, expand=YES) for button in self.buttons]
 
-        [window.bind(char, event) for char, event in zip('12345', events)]
+        [button.bind('<Button-1>', event) for button, event in zip(self.buttons, events)]
+        [window.bind(char, event) for char, event in zip("12345", events)]
 
         self.update_title()
         self.next_question()
-
-    def complete_question(self):
-        done = [button for button in self.buttons if button["background"] == "green"]
-        return len(done) == len(self.cur['correct'])
-
-    def miss(self):
-        wrong = [button for button in self.buttons if button["background"] == "red"]
-        return len(wrong)
 
     def set_color(self, widget, color="SystemButtonFace"):
         widget["background"] = color
@@ -71,6 +60,14 @@ class App:
 
     def mark_wrong(self):
         self.cur['count'] = self.cur.get('count', 0) - 1
+
+    def complete_question(self):
+        done = [button for button in self.buttons if button["background"] == "green"]
+        return len(done) == len(self.cur['correct'])
+
+    def miss(self):
+        wrong = [button for button in self.buttons if button["background"] == "red"]
+        return len(wrong)
 
     def judge(self, button, e=None):
         text = button["text"].replace('\n', '')
@@ -113,12 +110,11 @@ class App:
         random.shuffle(options)
 
         self.empty_button()
+        self.restore_color()
 
         self.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(curcount))
         [self.set_text(button, option)
          for button, option in zip(self.buttons, options)]
-
-        self.restore_color()
 
 
 root = Tk()

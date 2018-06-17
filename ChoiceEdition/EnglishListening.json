@@ -8,7 +8,8 @@
         ],
         "correct": [
             "The difficulties of protecting both animals and their habitats."
-        ]
+        ],
+        "count": -1
     },
     {
         "question": "What does the Endagered Species Act protect?",
@@ -20,7 +21,7 @@
         "correct": [
             "Endangered animals and their habitats."
         ],
-        "count": -2
+        "count": -3
     },
     {
         "question": "What has happended since the passage of the Endangered Species Act?",
@@ -32,7 +33,7 @@
         "correct": [
             "The number of species that are endangered has not changed much."
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "Most species of the baleen whales are now endangered.",
@@ -43,7 +44,7 @@
         "correct": [
             "t"
         ],
-        "count": -2
+        "count": -1
     },
     {
         "question": "A number of countries continue with commercial whaling simply because there is no policy against it.",
@@ -54,7 +55,7 @@
         "correct": [
             "t"
         ],
-        "count": -3
+        "count": -4
     },
     {
         "question": "California gray whales are now extinct.",
@@ -65,7 +66,7 @@
         "correct": [
             "f"
         ],
-        "count": -2
+        "count": -3
     },
     {
         "question": "According to the conversation, we can help by donating money to the conservation organizations.",
@@ -76,7 +77,7 @@
         "correct": [
             "f"
         ],
-        "count": -2
+        "count": -4
     },
     {
         "question": "All the endangered species of freshwater fish are in North America.",
@@ -108,7 +109,7 @@
         "correct": [
             "t"
         ],
-        "count": -1
+        "count": -2
     },
     {
         "question": "According to the research, most people think that a beautiful face is ___.",
@@ -168,7 +169,7 @@
         "correct": [
             "Their shoulders are lowered."
         ],
-        "count": -2
+        "count": -4
     },
     {
         "question": "How do some of the Padaung people make a living in Thailand?",
@@ -180,7 +181,7 @@
         "correct": [
             "They sell things to tourists."
         ],
-        "count": -2
+        "count": -3
     },
     {
         "question": "Why do Padaung women continue to wear brass cils?",
@@ -204,7 +205,7 @@
         "correct": [
             "People's attitude has changed over time."
         ],
-        "count": -4
+        "count": -5
     },
     {
         "question": "What is the most popular type of cosmetic surgery?",
@@ -228,6 +229,6 @@
         "correct": [
             "It can make people look the way they want to look like."
         ],
-        "count": -1
+        "count": -3
     }
 ]
