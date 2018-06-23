@@ -5,15 +5,19 @@ import json
 import codecs
 import configparser
 
+LIMIT = 3
+
 
 class App:
     def __init__(self, window):
+        self.window = window
+
         cfg = configparser.ConfigParser()
         cfg.read('config.ini')
 
         config_filename = cfg.get('path', 'filename')
 
-        self.data = json.load(codecs.open(config_filename, 'r', 'utf-8'))
+        self.questions = json.load(codecs.open(config_filename, 'r', 'utf-8'))
         self.hav_show = False
 
         question_ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
@@ -32,6 +36,7 @@ class App:
 
         self.entry.bind('<Return>', self.enter)
 
+        self.cur = None
         self.next_question()
 
     def set_text(self, widget, text):
@@ -41,19 +46,48 @@ class App:
             res.append(text[i:i + step])
         widget["text"] = '\n'.join(res)
 
+    def make_correct(self):
+        self.cur['count'] = self.cur.get('count', 0) + 1
+
+    def set_color(self, widget, color="black"):
+        widget["foreground"] = color
+
+    def set_title(self, done):
+        title_string = "({done}/{total})".format(done=done, total=len(self.questions))
+        self.window.title(title_string)
+
+    def update_title(self):
+        done = len([question for question in self.questions if question.get('count', 0) >= LIMIT])
+        self.set_title(done)
+
     def enter(self, e=None):
         # 在输入框按下回车后
         if self.hav_show:  # 如果已经显示了答案
             self.next_question()
             self.entry.delete(0, END)
+            self.set_color(self.answer)
         else:
-            self.set_text(self.answer, self.cur['answer'])
+            if self.cur:
+                self.set_text(self.answer, self.cur['answer'])
+                if self.entry.get().replace(' ', '') == self.cur['answer'].replace(' ', ''):
+                    self.make_correct()
+                    self.set_color(self.answer, 'green')
+
         self.hav_show = not self.hav_show
 
     def next_question(self):
-        self.cur = random.choice(self.data)
+        candidate = [question for question in self.questions if question.get('count', 0) < LIMIT]
+        if candidate:
+            self.cur = random.choice(candidate)
+            count = self.cur.get('count', 0)
+
+            self.set_text(self.question, self.cur['question'] + '(have done {} times)'.format(count))
+        else:
+            self.cur = None
+            self.set_Text(self.question, '全部题目已经复习完成！')
+
         self.set_text(self.answer, '')
-        self.set_text(self.question, self.cur['question'])
+        self.update_title()
 
 
 root = Tk()
