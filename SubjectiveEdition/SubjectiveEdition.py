@@ -15,9 +15,9 @@ class App:
         cfg = configparser.ConfigParser()
         cfg.read('config.ini')
 
-        config_filename = cfg.get('path', 'filename')
+        self.data_filename = cfg.get('path', 'filename')
 
-        self.questions = json.load(codecs.open(config_filename, 'r', 'utf-8'))
+        self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
         self.hav_show = False
 
         question_ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
@@ -75,6 +75,12 @@ class App:
 
         self.hav_show = not self.hav_show
 
+    def save(self):
+        """
+        保存文件
+        """
+        json.dump(self.questions, codecs.open(self.data_filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
+
     def next_question(self):
         candidate = [question for question in self.questions if question.get('count', 0) < LIMIT]
         if candidate:
@@ -85,7 +91,7 @@ class App:
         else:
             self.cur = None
             self.set_Text(self.question, '全部题目已经复习完成！')
-
+        self.save()
         self.set_text(self.answer, '')
         self.update_title()
 

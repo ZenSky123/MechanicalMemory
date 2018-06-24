@@ -77,7 +77,8 @@
     },
     {
         "question": "He is not Much of a good project leader because he lacks the ability to make ___ decisions.",
-        "answer": "informed"
+        "answer": "informed",
+        "count": 1
     },
     {
         "question": "A growing number of studies show a strong association between exercise and improvements in bone mineral ___.As a living tissue, bone responds to exercise by becoming stronger and ___.",
@@ -93,7 +94,7 @@
     },
     {
         "question": "A more advanced organism, like humans, will ___ less advanced species during its development stages. However, whtat distinguished humans from other lower species is the distinction, instead of the ___.",
-        "answer": "resemble  resmblance"
+        "answer": "resemble  resemblance"
     },
     {
         "question": "According to a new research, mothers of ___ births had much greater odds of having moderate or servere postpartum depressive symptoms compared with mothers of single babies. A contributing factor consisted in the ___ stress from several babies.",
