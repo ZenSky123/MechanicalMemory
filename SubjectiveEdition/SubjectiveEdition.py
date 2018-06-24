@@ -90,7 +90,7 @@ class App:
             self.set_text(self.question, self.cur['question'] + '(have done {} times)'.format(count))
         else:
             self.cur = None
-            self.set_Text(self.question, '全部题目已经复习完成！')
+            self.set_text(self.question, '全部题目已经复习完成！')
         self.save()
         self.set_text(self.answer, '')
         self.update_title()
