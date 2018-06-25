@@ -36,10 +36,13 @@ class App:
         [window.bind(char, event) for char, event in zip("12345", events)]
         # 绑定事件
 
+        self.cur = None
+
         self.update_title()
         self.next_question()
 
-    def set_color(self, widget, color="SystemButtonFace"):
+    @staticmethod
+    def set_color(widget, color="SystemButtonFace"):
         """
         设置控件背景颜色，SystemButtonFace为默认颜色
         :param widget:控件
@@ -47,7 +50,8 @@ class App:
         """
         widget["background"] = color
 
-    def set_text(self, widget, text, step=50):
+    @staticmethod
+    def set_text(widget, text, step=50):
         """
         设置控件文本
         :param widget:控件
@@ -140,19 +144,19 @@ class App:
         else:
             if choose_correct:
                 result_color = 'green'
-            self.set_color(button, result_color)
+            App.set_color(button, result_color)
 
     def empty_button(self):
         """
         清空所有按钮文字
         """
-        [self.set_text(button, '') for button in self.buttons]
+        [App.set_text(button, '') for button in self.buttons]
 
     def restore_color(self):
         """
         清空所有按钮颜色
         """
-        [self.set_color(button) for button in self.buttons]
+        [App.set_color(button) for button in self.buttons]
 
     def next_question(self):
         """
@@ -165,9 +169,9 @@ class App:
             self.cur = random.choice(optional_questions)
             count = self.cur.get('count', 0)
         else:
-            self.set_text(self.question, '全部题目已复习完成！')
+            App.set_text(self.question, '全部题目已复习完成！')
             self.restore_color()
-            [self.set_text(button, '') for button in self.buttons]
+            [App.set_text(button, '') for button in self.buttons]
             return
 
         options = self.cur['options'].copy()
@@ -176,8 +180,8 @@ class App:
         self.empty_button()
         self.restore_color()
 
-        self.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(count))
-        [self.set_text(button, option)
+        App.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(count))
+        [App.set_text(button, option)
          for button, option in zip(self.buttons, options)]
 
 

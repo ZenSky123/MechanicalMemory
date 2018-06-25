@@ -39,7 +39,12 @@ class App:
         self.cur = None
         self.next_question()
 
-    def set_text(self, widget, text):
+    @staticmethod
+    def set_color(widget, color="black"):
+        widget["foreground"] = color
+
+    @staticmethod
+    def set_text(widget, text):
         res = []
         step = 50
         for i in range(0, len(text), step):
@@ -48,9 +53,6 @@ class App:
 
     def make_correct(self):
         self.cur['count'] = self.cur.get('count', 0) + 1
-
-    def set_color(self, widget, color="black"):
-        widget["foreground"] = color
 
     def set_title(self, done):
         title_string = "({done}/{total})".format(done=done, total=len(self.questions))
@@ -65,13 +67,13 @@ class App:
         if self.hav_show:  # 如果已经显示了答案
             self.next_question()
             self.entry.delete(0, END)
-            self.set_color(self.answer)
+            App.set_color(self.answer)
         else:
             if self.cur:
                 self.set_text(self.answer, self.cur['answer'])
                 if self.entry.get().replace(' ', '') == self.cur['answer'].replace(' ', ''):
                     self.make_correct()
-                    self.set_color(self.answer, 'green')
+                    App.set_color(self.answer, 'green')
 
         self.hav_show = not self.hav_show
 
@@ -87,12 +89,12 @@ class App:
             self.cur = random.choice(candidate)
             count = self.cur.get('count', 0)
 
-            self.set_text(self.question, self.cur['question'] + '(have done {} times)'.format(count))
+            App.set_text(self.question, self.cur['question'] + '(have done {} times)'.format(count))
         else:
             self.cur = None
-            self.set_text(self.question, '全部题目已经复习完成！')
+            App.set_text(self.question, '全部题目已经复习完成！')
         self.save()
-        self.set_text(self.answer, '')
+        App.set_text(self.answer, '')
         self.update_title()
 
 
