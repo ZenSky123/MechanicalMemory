@@ -4,6 +4,7 @@ import tkinter.font as tkFont
 import json
 import codecs
 import configparser
+from reset import reset
 
 LIMIT = 3
 
@@ -18,6 +19,10 @@ class App:
         self.data_filename = cfg.get('path', 'filename')
 
         self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
+        if not self.candidate:
+            reset()
+            self.questions = json.load(codecs.open(self.data_filename, 'r', 'utf-8'))
+
         self.hav_show = False
 
         question_ft = tkFont.Font(family='Fixdsys', size=14, weight=tkFont.BOLD)
@@ -59,7 +64,7 @@ class App:
         self.window.title(title_string)
 
     def update_title(self):
-        done = len([question for question in self.questions if question.get('count', 0) >= LIMIT])
+        done = len(self.questions) - len(self.candidate)
         self.set_title(done)
 
     def enter(self, e=None):
@@ -84,7 +89,7 @@ class App:
         json.dump(self.questions, codecs.open(self.data_filename, 'w', 'utf-8'), ensure_ascii=False, indent=4)
 
     def next_question(self):
-        candidate = [question for question in self.questions if question.get('count', 0) < LIMIT]
+        candidate = self.candidate
         if candidate:
             self.cur = random.choice(candidate)
             count = self.cur.get('count', 0)
@@ -96,6 +101,10 @@ class App:
         self.save()
         App.set_text(self.answer, '')
         self.update_title()
+
+    @property
+    def candidate(self):
+        return [question for question in self.questions if question.get('count', 0) < LIMIT]
 
 
 root = Tk()

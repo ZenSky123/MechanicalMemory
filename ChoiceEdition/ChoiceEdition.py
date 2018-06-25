@@ -82,7 +82,7 @@ class App:
         计算已完成题目数，更新标题
         如果一个题目的正确次数达到了LIMIT次，则视为已完成
         """
-        done = len([question for question in self.questions if question.get('count', 0) >= LIMIT])
+        done = len(self.questions) - len(self.candidate)
         self.set_title(done)
 
     def mark_correct(self):
@@ -163,10 +163,10 @@ class App:
         进入下一题，从所有count值小于LIMIT值的题目中随机抽一道，打乱选项并依次放入按钮中
         如果没有题目则设置为已完成，并返回
         """
-        optional_questions = [question for question in self.questions if question.get('count', 0) < LIMIT]
+        candidate = self.candidate
 
-        if optional_questions:
-            self.cur = random.choice(optional_questions)
+        if candidate:
+            self.cur = random.choice(candidate)
             count = self.cur.get('count', 0)
         else:
             App.set_text(self.question, '全部题目已复习完成！')
@@ -183,6 +183,10 @@ class App:
         App.set_text(self.question, self.cur['question'] + '(已完成{}次)'.format(count))
         [App.set_text(button, option)
          for button, option in zip(self.buttons, options)]
+
+    @property
+    def candidate(self):
+        return [question for question in self.questions if question.get('count', 0) < LIMIT]
 
 
 root = Tk()
